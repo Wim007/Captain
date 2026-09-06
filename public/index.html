@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0B0C10" />
+  <meta name="description" content="The Captain. Rust, richting en frame voor mannen die een partner zoeken zonder zichzelf te verliezen." />
+  <title>The Captain</title>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css?v=1" />
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="wordmark">THE CAPTAIN</div>
+      <div class="topbar-right"><span id="ai-badge" class="badge">ENGINE</span></div>
+    </header>
+
+    <main id="views">
+      <!-- DASHBOARD -->
+      <section class="view active" data-view="dashboard">
+        <div class="greeting">
+          <p class="eyebrow" id="greet-date"></p>
+          <h1 id="greet-name">Goedenavond, Kapitein.</h1>
+        </div>
+
+        <div class="glass compass-card">
+          <div class="compass" id="compass">
+            <svg viewBox="0 0 240 240" aria-hidden="true">
+              <defs>
+                <linearGradient id="arc" x1="0" y1="1" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#4a5361" />
+                  <stop offset="55%" stop-color="#8a8f95" />
+                  <stop offset="100%" stop-color="#8C5E3C" />
+                </linearGradient>
+                <filter id="glow"><feGaussianBlur stdDeviation="3" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+              </defs>
+              <circle class="ring-bg" cx="120" cy="120" r="96" />
+              <path class="ring-track" d="" id="ring-track" />
+              <path class="ring-fill" d="" id="ring-fill" />
+              <g class="ticks" id="ticks"></g>
+              <circle class="marker" id="marker" cx="120" cy="24" r="7" />
+            </svg>
+            <div class="compass-center">
+              <div class="compass-score" id="frame-score">50</div>
+              <div class="compass-label">FRAME</div>
+            </div>
+          </div>
+          <div class="compass-scale"><span>Stormy</span><span id="frame-state">Aftastend</span><span>Captain</span></div>
+        </div>
+
+        <div class="metrics">
+          <div class="glass metric"><div class="metric-value" id="m-silence">0</div><div class="metric-label">Stilte-dagen</div></div>
+          <div class="glass metric"><div class="metric-value" id="m-reframes">0</div><div class="metric-label">Herschreven</div></div>
+          <div class="glass metric"><div class="metric-value" id="m-anchors">0</div><div class="metric-label">Anker-momenten</div></div>
+        </div>
+
+        <div class="glass lesson">
+          <p class="eyebrow">Kompas van vandaag</p>
+          <p class="lesson-text" id="lesson-text"></p>
+          <button class="btn ghost small" id="checkin-btn">Vandaag niets gestuurd uit onrust</button>
+        </div>
+
+        <p class="eyebrow section-title">Modules</p>
+        <div class="modules">
+          <button class="glass module" data-go="decoder"><span class="module-index">01</span><span class="module-name">Signal Decoder</span><span class="module-desc">Wat betekende dat wat ze deed?</span></button>
+          <button class="glass module" data-go="reframer"><span class="module-index">02</span><span class="module-name">De Reframer</span><span class="module-desc">Van lang bericht naar rustig voorstel.</span></button>
+          <button class="glass module" data-go="simulator"><span class="module-index">03</span><span class="module-name">De Simulator</span><span class="module-desc">Oefen de moeilijke momenten.</span></button>
+          <button class="glass module" data-go="library"><span class="module-index">04</span><span class="module-name">Het Logboek</span><span class="module-desc">De kennis en jouw geschiedenis.</span></button>
+        </div>
+      </section>
+
+      <!-- DECODER -->
+      <section class="view" data-view="decoder">
+        <div class="view-head"><p class="eyebrow">Module 01</p><h2>Signal Decoder</h2><p class="lead">Beschrijf wat ze deed of zei. Ik lees de zes onbewuste signalen en de staat van haar zenuwstelsel.</p></div>
+        <div class="glass">
+          <textarea id="decode-input" rows="5" placeholder="Bijv. Na de borrel bleef ze langer hangen en liep ze mee naar mijn fiets. Ze raakte even mijn arm aan toen ze lachte en zei 'we moeten dat Italiaanse restaurant eens proberen'."></textarea>
+          <div class="row"><button class="btn primary" id="decode-btn">Decodeer</button><button class="btn ghost" id="decode-example">Voorbeeld</button></div>
+        </div>
+        <div id="decode-result" class="result hidden"></div>
+      </section>
+
+      <!-- REFRAMER -->
+      <section class="view" data-view="reframer">
+        <div class="view-head"><p class="eyebrow">Module 02</p><h2>De Reframer</h2><p class="lead">Plak het bericht dat je wilt sturen. Ik haal de onrust eruit en laat over wat een kapitein zou zeggen.</p></div>
+        <div class="glass">
+          <textarea id="reframe-input" rows="6" placeholder="Bijv. Hey! Sorry dat ik weer stuur haha, ik vroeg me af of je misschien zin hebt om een keer wat te drinken? Geen druk hoor, als je het druk hebt is het ook prima. Laat maar weten!"></textarea>
+          <div class="row"><button class="btn primary" id="reframe-btn">Herschrijf</button><button class="btn ghost" id="reframe-example">Voorbeeld</button></div>
+        </div>
+        <div id="reframe-result" class="result hidden"></div>
+      </section>
+
+      <!-- SIMULATOR -->
+      <section class="view" data-view="simulator">
+        <div class="view-head"><p class="eyebrow">Module 03</p><h2>De Simulator</h2><p class="lead">Kies een situatie. Na elk bericht van jou krijg je een frame-analyse en een coachnotitie.</p></div>
+        <div id="sim-scenarios" class="scenarios"></div>
+        <div id="sim-chat" class="hidden">
+          <div class="sim-header glass"><div><p class="eyebrow" id="sim-scenario-name"></p><strong id="sim-persona"></strong></div><button class="btn ghost small" id="sim-end">Afronden</button></div>
+          <div class="chat" id="chat-log"></div>
+          <div class="chat-input glass">
+            <textarea id="sim-input" rows="2" placeholder="Jouw reactie…"></textarea>
+            <button class="btn primary" id="sim-send">Stuur</button>
+          </div>
+        </div>
+        <div id="sim-summary" class="result hidden"></div>
+      </section>
+
+      <!-- LIBRARY / LOGBOEK -->
+      <section class="view" data-view="library">
+        <div class="view-head"><p class="eyebrow">Module 04</p><h2>Het Logboek</h2><p class="lead">De kennis achter The Captain en jouw eigen geschiedenis.</p></div>
+        <div class="tabs" id="lib-tabs">
+          <button class="tab active" data-tab="pillars">Pijlers</button>
+          <button class="tab" data-tab="signals">Signalen</button>
+          <button class="tab" data-tab="touch">Aanraking</button>
+          <button class="tab" data-tab="language">Taal</button>
+          <button class="tab" data-tab="history">Historie</button>
+        </div>
+        <div id="lib-content"></div>
+      </section>
+    </main>
+
+    <button class="anchor-fab" id="anchor-fab" aria-label="Emergency Anchor"><span class="anchor-ring"></span><svg class="anchor-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><line x1="12" y1="7.5" x2="12" y2="21"/><line x1="7" y1="10" x2="17" y2="10"/><path d="M4 14c0 4 3.5 7 8 7s8-3 8-7"/><path d="M2.5 13.5 4 14l1.5-1.5M21.5 13.5 20 14l-1.5-1.5"/></svg></button>
+
+    <nav class="tabbar">
+      <button class="nav active" data-go="dashboard"><span class="nav-icon">◎</span><span>Dek</span></button>
+      <button class="nav" data-go="decoder"><span class="nav-icon">◈</span><span>Decoder</span></button>
+      <button class="nav" data-go="reframer"><span class="nav-icon">✎</span><span>Reframer</span></button>
+      <button class="nav" data-go="simulator"><span class="nav-icon">◬</span><span>Simulator</span></button>
+      <button class="nav" data-go="library"><span class="nav-icon">▤</span><span>Logboek</span></button>
+    </nav>
+  </div>
+
+  <!-- EMERGENCY ANCHOR OVERLAY -->
+  <div class="anchor-overlay" id="anchor-overlay" hidden>
+    <div class="anchor-inner">
+      <p class="eyebrow">Emergency Anchor</p>
+      <h2 id="anchor-title">Berichten vergrendeld.</h2>
+      <div class="breath-stage">
+        <div class="breath-circle" id="breath-circle"></div>
+        <div class="breath-phase" id="breath-phase">Adem in</div>
+      </div>
+      <p class="anchor-text" id="anchor-text">Wat je nu voelt is een golf. Golven gaan voorbij. Jij blijft.</p>
+      <div class="anchor-timer" id="anchor-timer">3:00</div>
+      <button class="btn primary" id="anchor-done" disabled>Ik sta weer op mijn as</button>
+      <button class="btn ghost small" id="anchor-abort">Sluit toch</button>
+    </div>
+  </div>
+
+  <!-- ONBOARDING -->
+  <div class="modal" id="onboard" hidden>
+    <div class="glass modal-card">
+      <p class="eyebrow">Welkom aan boord</p>
+      <h2>Hoe mag ik je noemen?</h2>
+      <input id="onboard-name" type="text" maxlength="24" placeholder="Je voornaam" autocomplete="off" />
+      <p class="muted">Alles blijft op dit apparaat. Geen account, geen cloud.</p>
+      <button class="btn primary" id="onboard-go">Aan boord</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+  <script src="/app.js?v=1"></script>
+</body>
+</html>

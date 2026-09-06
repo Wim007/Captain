@@ -1,0 +1,13 @@
+{
+  "name": "The Captain",
+  "short_name": "Captain",
+  "description": "Rust, richting en frame voor mannen die een partner zoeken zonder zichzelf te verliezen.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0C10",
+  "theme_color": "#0B0C10",
+  "lang": "nl",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
