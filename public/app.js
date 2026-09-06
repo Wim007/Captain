@@ -349,14 +349,38 @@
     $("#reset-data")?.addEventListener("click", () => { if (confirm("Alle gegevens op dit apparaat wissen?")) { state = structuredClone(defaultState); save(); renderLibrary("history"); toast("Gewist."); } });
   }
 
-  // ---------- Onboarding ----------
+  // ---------- Intro / beginpagina ----------
+  const introSteps = $$(".intro-step");
+  const LAST_STEP = introSteps.length - 1;
+  let introIdx = 0;
+  function showIntroStep(i) {
+    introIdx = Math.max(0, Math.min(LAST_STEP, i));
+    introSteps.forEach((s) => s.classList.toggle("active", Number(s.dataset.step) === introIdx));
+    $("#intro-dots").innerHTML = introSteps.map((_, k) => `<i class="${k === introIdx ? "active" : ""}"></i>`).join("");
+    const last = introIdx === LAST_STEP;
+    $("#intro-next").textContent = last ? "Aan boord" : "Volgende";
+    $("#intro-skip").hidden = last;
+    if (last) setTimeout(() => $("#onboard-name").focus(), 250);
+    $("#intro").scrollTo({ top: 0 });
+  }
+  function openIntro(startAt = 0) {
+    $("#intro").hidden = false; document.body.style.overflow = "hidden";
+    if (state.name) $("#onboard-name").value = state.name;
+    showIntroStep(startAt);
+  }
+  function closeIntro() {
+    const name = $("#onboard-name").value.trim().slice(0, 24);
+    state.name = name || state.name || "Kapitein"; state.introSeen = true; save();
+    $("#intro").hidden = true; document.body.style.overflow = "";
+    renderDashboard(); haptic(15);
+  }
+  $("#intro-next").addEventListener("click", () => { haptic(6); introIdx === LAST_STEP ? closeIntro() : showIntroStep(introIdx + 1); });
+  $("#intro-skip").addEventListener("click", () => showIntroStep(LAST_STEP));
+  $("#onboard-name").addEventListener("keydown", (e) => { if (e.key === "Enter") closeIntro(); });
+  $("#help-btn").addEventListener("click", () => openIntro(0));
   function onboarding() {
-    if (state.name) return;
-    const m = $("#onboard"); m.hidden = false;
-    const done = () => { state.name = $("#onboard-name").value.trim().slice(0, 24) || "Kapitein"; save(); m.hidden = true; renderDashboard(); haptic(15); };
-    $("#onboard-go").addEventListener("click", done);
-    $("#onboard-name").addEventListener("keydown", (e) => { if (e.key === "Enter") done(); });
-    setTimeout(() => $("#onboard-name").focus(), 300);
+    if (state.name && state.introSeen) return;
+    openIntro(0);
   }
 
   // ---------- Init ----------

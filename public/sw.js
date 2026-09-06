@@ -1,5 +1,5 @@
 // Minimal service worker: cache the shell so the app opens offline. API calls always go to the network.
-const CACHE = "captain-shell-v1";
+const CACHE = "captain-shell-v2";
 const SHELL = ["/", "/index.html", "/styles.css", "/app.js", "/icon.svg", "/manifest.webmanifest"];
 
 self.addEventListener("install", (e) => {

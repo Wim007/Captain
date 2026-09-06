@@ -12,13 +12,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=1" />
+  <link rel="stylesheet" href="/styles.css?v=2" />
 </head>
 <body>
   <div class="app" id="app">
     <header class="topbar">
       <div class="wordmark">THE CAPTAIN</div>
-      <div class="topbar-right"><span id="ai-badge" class="badge">ENGINE</span></div>
+      <div class="topbar-right"><span id="ai-badge" class="badge">ENGINE</span><button class="help-btn" id="help-btn" aria-label="Uitleg">?</button></div>
     </header>
 
     <main id="views">
@@ -61,23 +61,24 @@
         </div>
 
         <div class="glass lesson">
-          <p class="eyebrow">Kompas van vandaag</p>
+          <p class="eyebrow">Les van vandaag</p>
           <p class="lesson-text" id="lesson-text"></p>
           <button class="btn ghost small" id="checkin-btn">Vandaag niets gestuurd uit onrust</button>
         </div>
 
-        <p class="eyebrow section-title">Modules</p>
+        <p class="eyebrow section-title">Wat wil je doen?</p>
         <div class="modules">
-          <button class="glass module" data-go="decoder"><span class="module-index">01</span><span class="module-name">Signal Decoder</span><span class="module-desc">Wat betekende dat wat ze deed?</span></button>
-          <button class="glass module" data-go="reframer"><span class="module-index">02</span><span class="module-name">De Reframer</span><span class="module-desc">Van lang bericht naar rustig voorstel.</span></button>
-          <button class="glass module" data-go="simulator"><span class="module-index">03</span><span class="module-name">De Simulator</span><span class="module-desc">Oefen de moeilijke momenten.</span></button>
-          <button class="glass module" data-go="library"><span class="module-index">04</span><span class="module-name">Het Logboek</span><span class="module-desc">De kennis en jouw geschiedenis.</span></button>
+          <button class="glass module" data-go="decoder"><span class="module-index">01</span><span class="module-name">Signal Decoder</span><span class="module-desc">Vindt ze me leuk? Beschrijf wat ze deed of zei.</span></button>
+          <button class="glass module" data-go="reframer"><span class="module-index">02</span><span class="module-name">De Reframer</span><span class="module-desc">Maak van je bericht een korte, rustige versie.</span></button>
+          <button class="glass module" data-go="simulator"><span class="module-index">03</span><span class="module-name">De Simulator</span><span class="module-desc">Oefen een lastig gesprek voordat het echt is.</span></button>
+          <button class="glass module" data-go="library"><span class="module-index">04</span><span class="module-name">Het Logboek</span><span class="module-desc">De kennis achter de app en jouw geschiedenis.</span></button>
         </div>
+        <p class="muted dash-help">Rechtsonder: de ankerknop. Voor het moment dat je haar uit onrust wilt appen.</p>
       </section>
 
       <!-- DECODER -->
       <section class="view" data-view="decoder">
-        <div class="view-head"><p class="eyebrow">Module 01</p><h2>Signal Decoder</h2><p class="lead">Beschrijf wat ze deed of zei. Ik lees de zes onbewuste signalen en de staat van haar zenuwstelsel.</p></div>
+        <div class="view-head"><p class="eyebrow">Module 01</p><h2>Signal Decoder</h2><p class="lead">Twijfel je of ze je leuk vindt? Beschrijf zo concreet mogelijk wat ze deed of zei. Je ziet welke signalen erin zitten, hoe open ze is en wat je het beste kunt doen.</p></div>
         <div class="glass">
           <textarea id="decode-input" rows="5" placeholder="Bijv. Na de borrel bleef ze langer hangen en liep ze mee naar mijn fiets. Ze raakte even mijn arm aan toen ze lachte en zei 'we moeten dat Italiaanse restaurant eens proberen'."></textarea>
           <div class="row"><button class="btn primary" id="decode-btn">Decodeer</button><button class="btn ghost" id="decode-example">Voorbeeld</button></div>
@@ -87,7 +88,7 @@
 
       <!-- REFRAMER -->
       <section class="view" data-view="reframer">
-        <div class="view-head"><p class="eyebrow">Module 02</p><h2>De Reframer</h2><p class="lead">Plak het bericht dat je wilt sturen. Ik haal de onrust eruit en laat over wat een kapitein zou zeggen.</p></div>
+        <div class="view-head"><p class="eyebrow">Module 02</p><h2>De Reframer</h2><p class="lead">Plak het bericht dat je wilt sturen. Je ziet waar de onrust in zit en krijgt een korte, rustige versie terug. Of het advies om niets te sturen.</p></div>
         <div class="glass">
           <textarea id="reframe-input" rows="6" placeholder="Bijv. Hey! Sorry dat ik weer stuur haha, ik vroeg me af of je misschien zin hebt om een keer wat te drinken? Geen druk hoor, als je het druk hebt is het ook prima. Laat maar weten!"></textarea>
           <div class="row"><button class="btn primary" id="reframe-btn">Herschrijf</button><button class="btn ghost" id="reframe-example">Voorbeeld</button></div>
@@ -97,7 +98,7 @@
 
       <!-- SIMULATOR -->
       <section class="view" data-view="simulator">
-        <div class="view-head"><p class="eyebrow">Module 03</p><h2>De Simulator</h2><p class="lead">Kies een situatie. Na elk bericht van jou krijg je een frame-analyse en een coachnotitie.</p></div>
+        <div class="view-head"><p class="eyebrow">Module 03</p><h2>De Simulator</h2><p class="lead">Kies een situatie en oefen het gesprek. Na elk bericht van jou zie je hoe zeker je overkwam, met een korte tip van De Kapitein.</p></div>
         <div id="sim-scenarios" class="scenarios"></div>
         <div id="sim-chat" class="hidden">
           <div class="sim-header glass"><div><p class="eyebrow" id="sim-scenario-name"></p><strong id="sim-persona"></strong></div><button class="btn ghost small" id="sim-end">Afronden</button></div>
@@ -112,7 +113,7 @@
 
       <!-- LIBRARY / LOGBOEK -->
       <section class="view" data-view="library">
-        <div class="view-head"><p class="eyebrow">Module 04</p><h2>Het Logboek</h2><p class="lead">De kennis achter The Captain en jouw eigen geschiedenis.</p></div>
+        <div class="view-head"><p class="eyebrow">Module 04</p><h2>Het Logboek</h2><p class="lead">Alle kennis achter The Captain, stap voor stap uitgelegd. Plus alles wat je zelf al hebt gedaan.</p></div>
         <div class="tabs" id="lib-tabs">
           <button class="tab active" data-tab="pillars">Pijlers</button>
           <button class="tab" data-tab="signals">Signalen</button>
@@ -151,18 +152,61 @@
     </div>
   </div>
 
-  <!-- ONBOARDING -->
-  <div class="modal" id="onboard" hidden>
-    <div class="glass modal-card">
-      <p class="eyebrow">Welkom aan boord</p>
-      <h2>Hoe mag ik je noemen?</h2>
-      <input id="onboard-name" type="text" maxlength="24" placeholder="Je voornaam" autocomplete="off" />
-      <p class="muted">Alles blijft op dit apparaat. Geen account, geen cloud.</p>
-      <button class="btn primary" id="onboard-go">Aan boord</button>
+  <!-- INTRO / BEGINPAGINA -->
+  <div class="intro" id="intro" hidden>
+    <div class="intro-inner">
+      <div class="intro-top"><div class="wordmark">THE CAPTAIN</div><button class="btn ghost small" id="intro-skip">Overslaan</button></div>
+
+      <div class="intro-steps">
+        <section class="intro-step active" data-step="0">
+          <div class="intro-hero"><svg viewBox="0 0 128 128" aria-hidden="true"><circle cx="64" cy="64" r="40" fill="none" stroke="#1F2833" stroke-width="8"/><path d="M64 24 A40 40 0 1 1 30 84" fill="none" stroke="#b5804f" stroke-width="8" stroke-linecap="round"/><line x1="64" y1="64" x2="88" y2="40" stroke="#C5C6C7" stroke-width="4" stroke-linecap="round"/><circle cx="64" cy="64" r="5" fill="#0B0C10" stroke="#b5804f" stroke-width="3"/></svg></div>
+          <p class="eyebrow">Wat is dit?</p>
+          <h2>Een coach in je broekzak voor mannen die daten.</h2>
+          <p class="intro-text">Niet om trucjes te leren. Wel om rustig en zeker te blijven op het moment dat je iemand leuk vindt. Want dat is precies wat aantrekkelijk is, en precies wat het moeilijkst is.</p>
+        </section>
+
+        <section class="intro-step" data-step="1">
+          <p class="eyebrow">Het idee in één zin</p>
+          <h2>Jouw leven is de taart. Zij is de kers.</h2>
+          <p class="intro-text">Zolang jij je eigen leven voorop zet en niet gaat pushen, blijf jij interessant. Zodra je gaat overtuigen, uitleggen of achter haar aan rent, lekt dat weg.</p>
+          <p class="intro-text">The Captain helpt je om dat vol te houden op de momenten dat het spannend wordt: als ze niet reageert, als je twijfelt wat je moet sturen, als je haar voor de derde keer wilt appen.</p>
+        </section>
+
+        <section class="intro-step" data-step="2">
+          <p class="eyebrow">Wat kun je hier doen?</p>
+          <h2>Vier hulpmiddelen en één noodknop.</h2>
+          <ul class="intro-list">
+            <li><b>Signal Decoder</b><span>Twijfel je of ze je leuk vindt? Beschrijf wat ze deed of zei. Je ziet welke signalen erin zitten en wat je het beste kunt doen.</span></li>
+            <li><b>De Reframer</b><span>Wil je een berichtje sturen, maar is het te lang of te onzeker? Plak het hier. Je krijgt een korte, rustige versie terug.</span></li>
+            <li><b>De Simulator</b><span>Oefen lastige gesprekken met een nagespeelde vrouw. Na elk bericht zie je hoe zeker je overkwam.</span></li>
+            <li><b>Het Logboek</b><span>Alle kennis achter de app, plus alles wat jij al hebt gedaan.</span></li>
+            <li><b>De ankerknop</b><span>De koperen knop rechtsonder. Wil je haar uit onrust appen? Druk erop. Je ademt drie minuten en de drang zakt.</span></li>
+          </ul>
+        </section>
+
+        <section class="intro-step" data-step="3">
+          <p class="eyebrow">Het kompas</p>
+          <h2>Eén getal dat zegt hoe stevig je staat.</h2>
+          <p class="intro-text">Op je dashboard staat een score van 0 tot 100: je <b>Frame</b>. Laag is onrustig en zoekend, hoog is rustig en zeker.</p>
+          <p class="intro-text">Hij groeit door wat je doet: dagen niet uit onrust appen, berichten laten herschrijven, oefenen in de simulator, de ankerknop gebruiken. Geen straf als het even niet lukt. Wel een beloning als je het volhoudt.</p>
+        </section>
+
+        <section class="intro-step" data-step="4">
+          <p class="eyebrow">Welkom aan boord</p>
+          <h2>Hoe mag ik je noemen?</h2>
+          <input id="onboard-name" type="text" maxlength="24" placeholder="Je voornaam" autocomplete="off" />
+          <p class="muted">Alles blijft op dit apparaat. Geen account, geen cloud, niemand leest mee.</p>
+        </section>
+      </div>
+
+      <div class="intro-nav">
+        <div class="dots" id="intro-dots"></div>
+        <button class="btn primary" id="intro-next">Volgende</button>
+      </div>
     </div>
   </div>
 
   <div class="toast" id="toast" hidden></div>
-  <script src="/app.js?v=1"></script>
+  <script src="/app.js?v=2"></script>
 </body>
 </html>
