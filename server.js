@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 
 const text = (v, max = 4000) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
-app.get("/api/health", (req, res) => res.json({ ok: true, ai: ai.aiEnabled }));
+app.get("/api/health", (req, res) => res.json({ ok: true, ai: ai.aiEnabled, provider: ai.aiProvider, model: ai.aiModel }));
 
 app.get("/api/knowledge", (req, res) => {
   res.json({
@@ -31,6 +31,7 @@ app.get("/api/knowledge", (req, res) => {
     lessons: LESSONS,
     scenarios: SCENARIOS.map(({ context, ...s }) => s),
     ai: ai.aiEnabled,
+    aiProvider: ai.aiProvider,
   });
 });
 
@@ -75,5 +76,5 @@ app.use(express.static(path.join(here, "public"), { maxAge: process.env.NODE_ENV
 app.get("*", (req, res) => res.sendFile(path.join(here, "public", "index.html")));
 
 app.listen(PORT, () => {
-  console.log(`The Captain draait op poort ${PORT} (AI: ${ai.aiEnabled ? "Claude " + (process.env.CAPTAIN_MODEL || "claude-opus-5") : "offline engine"})`);
+  console.log(`The Captain draait op poort ${PORT} (AI: ${ai.aiEnabled ? `${ai.aiProvider} ${ai.aiModel}` : "offline engine"})`);
 });

@@ -19,7 +19,7 @@ Het dashboard toont de **Compass**: je frame-score, opgebouwd uit stilte-dagen, 
 
 - Node.js 20+, Express
 - Vanilla HTML/CSS/JS front-end (PWA, installeerbaar op telefoon)
-- Claude API via `@anthropic-ai/sdk` (optioneel). Zonder sleutel draait de ingebouwde offline coaching-engine.
+- AI via OpenAI (`openai`, aanbevolen) of Claude (`@anthropic-ai/sdk`). Zonder sleutel draait de ingebouwde offline coaching-engine.
 
 ## Lokaal draaien
 
@@ -30,11 +30,11 @@ npm start
 
 Open http://localhost:3000.
 
-Met Claude (aanbevolen voor de beste analyses):
+Met OpenAI (aanbevolen voor de beste analyses):
 
 ```bash
 cp .env.example .env
-# vul ANTHROPIC_API_KEY in
+# vul OPENAI_API_KEY in
 npm start
 ```
 
@@ -42,7 +42,7 @@ Of via Docker:
 
 ```bash
 docker build -t the-captain .
-docker run -p 3000:3000 -e ANTHROPIC_API_KEY=sk-ant-... the-captain
+docker run -p 3000:3000 -e OPENAI_API_KEY=sk-... the-captain
 ```
 
 Tests:
@@ -70,10 +70,11 @@ Repo koppelen aan een nieuwe Railway-service. `railway.toml` staat in de root, d
 | Variabele | Verplicht | Uitleg |
 |---|---|---|
 | `PORT` | nee | Railway zet deze zelf. Standaard 3000. |
-| `ANTHROPIC_API_KEY` | nee | Zonder sleutel draait de offline engine. Met sleutel doet Claude de analyses. |
-| `CAPTAIN_MODEL` | nee | Standaard `claude-opus-5`. |
+| `OPENAI_API_KEY` | nee | Aanbevolen. Met deze sleutel doet OpenAI de analyses en het rollenspel. |
+| `ANTHROPIC_API_KEY` | nee | Alternatief. Alleen gebruikt als er geen `OPENAI_API_KEY` staat. |
+| `CAPTAIN_MODEL` | nee | Standaard `gpt-4.1` bij OpenAI, `claude-opus-5` bij Claude. |
 
-De AI-laag gebruikt server-side fallbacks (`fallbacks: "default"`), zodat een geweigerd verzoek automatisch naar een ander Claude-model gaat. Faalt ook dat, dan valt de app terug op de offline engine. De gebruiker merkt er niets van.
+Volgorde: OpenAI als er een sleutel is, anders Claude, anders de offline engine. Mislukt een AI-aanroep (netwerk, limiet, ongeldige JSON), dan valt de app per verzoek terug op de offline engine. De gebruiker merkt er niets van.
 
 ## Structuur
 
@@ -81,7 +82,7 @@ De AI-laag gebruikt server-side fallbacks (`fallbacks: "default"`), zodat een ge
 server.js            Express-server en API
 lib/knowledge.js     Kennisbank (pijlers, signalen, aanraking, taal, scenario's)
 lib/engine.js        Offline coaching-engine (heuristieken)
-lib/ai.js            Claude-laag met fallback naar de engine
+lib/ai.js            AI-laag (OpenAI of Claude) met fallback naar de engine
 public/              Front-end (index.html, styles.css, app.js, PWA-bestanden)
 tests/               Engine-tests (node --test)
 ```

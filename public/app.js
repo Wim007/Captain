@@ -184,7 +184,7 @@
       ${r.negatives?.length ? `<div class="glass"><div class="card-title">Tegensignalen</div><div class="chips">${r.negatives.map((n) => `<span class="chip warn">${esc(n.label)}</span>`).join("")}</div></div>` : ""}
       <div class="glass"><div class="card-title">Lezing</div><p class="body-text">${esc(r.interpretation)}</p></div>
       <div class="glass move"><div class="card-title">Jouw zet</div><p>${esc(r.move)}</p></div>
-      <p class="muted" style="text-align:center">${r.source === "claude" ? "Analyse door Claude" : "Analyse door de offline engine"}</p>`;
+      <p class="muted" style="text-align:center">${r.source === "ai" ? "Analyse door AI" : "Analyse door de offline engine"}</p>`;
     root.classList.remove("hidden");
     animateBars(root);
   }
@@ -220,7 +220,7 @@
         <p class="muted">${esc(r.groundedExit.why)}</p>
         <div class="row"><button class="btn ghost small" id="choose-exit">Ik kies stilte</button></div>
       </div>
-      <p class="muted" style="text-align:center">${r.source === "claude" ? "Herschreven door Claude" : "Herschreven door de offline engine"}</p>`;
+      <p class="muted" style="text-align:center">${r.source === "ai" ? "Herschreven door AI" : "Herschreven door de offline engine"}</p>`;
     root.classList.remove("hidden");
     animateBars(root);
     $("#copy-reframe")?.addEventListener("click", async () => { try { await navigator.clipboard.writeText(r.reframed); toast("Gekopieerd."); haptic(); } catch { toast("Kopiëren lukte niet."); } });
@@ -366,7 +366,7 @@
     onboarding();
     try {
       knowledge = await (await fetch("/api/knowledge")).json();
-      const b = $("#ai-badge"); b.textContent = knowledge.ai ? "CLAUDE" : "ENGINE"; b.classList.toggle("ai", !!knowledge.ai);
+      const b = $("#ai-badge"); b.textContent = knowledge.ai ? (knowledge.aiProvider === "openai" ? "OPENAI" : "CLAUDE") : "ENGINE"; b.classList.toggle("ai", !!knowledge.ai);
       renderScenarios(); renderDashboard(); renderLibrary(currentTab);
     } catch { toast("Kon de kennisbank niet laden."); }
     if ("serviceWorker" in navigator) { navigator.serviceWorker.register("/sw.js").catch(() => {}); }
